@@ -1,6 +1,6 @@
 <?php
-/* //Funkcja do sprawdzania w consoli !!!!!!!!!!!!!!! WYWALA przechodzenie do innej strony "HEADER" używać z rozwagą
-function debug_to_console($data){ //debug_to_console("TEST2");
+ //Funkcja do sprawdzania w consoli !!!!!!!!!!!!!!! WYWALA przechodzenie do innej strony "HEADER" używać z rozwagą
+/*function debug_to_console($data){ //debug_to_console("TEST2");
     $output = $data;
     if (is_array($output))
         $output = implode(',', $output);
@@ -20,13 +20,30 @@ if (isset($_POST['submit']))
             $handle=$pdo->prepare($sql);
             $params=['email'=>$email];
             $handle->execute($params);
+            $option = array("cost"=>4);
             if ($handle->rowCount()>0){
-                //debug_to_console("TEST2");
+                //debug_to_console($password);
                 $getRow = $handle->fetch(PDO::FETCH_ASSOC);
-                //debug_to_console($getRow);
+                //debug_to_console(password_verify($password,$getRow['password']));
                 //debug_to_console($getRow['password']);
-                //password_verify($password,$getRow['password'])
-                if ($password==$getRow['password']){
+                //$password_hash=$getRow['password'];
+
+
+                /*$password2='$2y$04$XM5bUZFY6lvVw9ZvOP0JHu3';
+                echo $password;
+                echo "|-----|";
+                echo $password2;
+                echo "|-----|";
+                echo $getRow['password'];
+                if($password2==$getRow['password']){
+                    if (password_verify($password,$password2)){
+                        unset($getRow['password']);
+                        $_SESSION=$getRow;
+                        header('location:main.php');
+                        exit();
+                    }
+                }*/
+                if($password==$getRow['password']){
                     unset($getRow['password']);
                     $_SESSION=$getRow;
                     header('location:main.php');

@@ -13,7 +13,7 @@ if (isset($_POST['submit']))
 
         $options = array("cost"=>4);
         if($password==$confirmPass){
-            //$hashPassword = password_hash($password,PASSWORD_BCRYPT,$options);
+            //$hashPassword = password_hash($password,PASSWORD_DEFAULT,$options);
             $hashPassword=$password;
             if(filter_var($email,FILTER_VALIDATE_EMAIL)){
                 $sql = "SELECT * FROM users WHERE email = :email";
@@ -21,9 +21,9 @@ if (isset($_POST['submit']))
                 $params=['email'=>$email];
                 $handle->execute($params);
                 if ($handle->rowCount()==0) {
-                    $sql = "INSERT INTO users ('email', 'password', 'name', 'surname', 'role') values(:email,:passw,:fname,:sur,:urole)";
+                    $sql = "INSERT INTO users (email, password, name, surname, role) values (:email,:passw,:fname,:sur,:urole)";
                     try{
-                        $handle=$pdo->prepare(sql);
+                        $handle=$pdo->prepare($sql);
                         $params=[
                             ':email'=>$email,
                             ':passw'=>$hashPassword,
@@ -127,7 +127,7 @@ if (isset($_POST['submit']))
       echo '<div class="alert alert-success">'.$success.'</div>';
   }
   ?>
-  <form class="form" method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>)">
+  <form class="form" method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
     <h4 class="form__title">Sign up</h4>
 
     <input class="form__input" type="text" name="name" placeholder="First name" value="<?php echo (isset($valName) ? $valName : '')?>">
