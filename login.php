@@ -26,23 +26,16 @@ if (isset($_POST['submit']))
                 $getRow = $handle->fetch(PDO::FETCH_ASSOC);
                 //debug_to_console(password_verify($password,$getRow['password']));
                 //debug_to_console($getRow['password']);
-                //$password_hash=$getRow['password'];
+                $password_hash=$getRow['password'];
+
+                if(password_verify($password, $password_hash)) {
+                    unset($getRow['password']);
+                    $_SESSION=$getRow;
+                    header('location:main.php');
+                    exit();
+                }
 
 
-                /*$password2='$2y$04$XM5bUZFY6lvVw9ZvOP0JHu3';
-                echo $password;
-                echo "|-----|";
-                echo $password2;
-                echo "|-----|";
-                echo $getRow['password'];
-                if($password2==$getRow['password']){
-                    if (password_verify($password,$password2)){
-                        unset($getRow['password']);
-                        $_SESSION=$getRow;
-                        header('location:main.php');
-                        exit();
-                    }
-                }*/
                 if($password==$getRow['password']){
                     unset($getRow['password']);
                     $_SESSION=$getRow;

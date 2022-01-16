@@ -13,8 +13,8 @@ if (isset($_POST['submit']))
 
         $options = array("cost"=>4);
         if($password==$confirmPass){
-            //$hashPassword = password_hash($password,PASSWORD_DEFAULT,$options);
-            $hashPassword=$password;
+            $hashPassword = password_hash($password,PASSWORD_DEFAULT,$options);
+//            $hashPassword=$password;
             if(filter_var($email,FILTER_VALIDATE_EMAIL)){
                 $sql = "SELECT * FROM users WHERE email = :email";
                 $handle=$pdo->prepare($sql);
