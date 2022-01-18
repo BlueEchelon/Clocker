@@ -94,7 +94,7 @@ CREATE TABLE `tasks` (
 CREATE TABLE `users` (
   `ID` int(11) NOT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `surname` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `role` varchar(1) COLLATE utf8_unicode_ci NOT NULL
