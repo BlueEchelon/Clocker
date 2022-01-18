@@ -1,39 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Roboto:wght@300;400;500;700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="../styles/styles.css">
-  <title>Clocker</title>
-</head>
+<?php require_once "_head.php" ?>
 
 <body>
   <?php require_once "_navbar.php" ?>
 
   <!-- Hero section -->
-  <section class="hero">
+  <section class="hero" id="hero">
     <div class="hero__content">
       <h2 class="hero__title">Time management has never been easier.</h2>
       <p class="hero__text">Keep track of you work time, create numerous
         projects and increase your
         productivity.</p>
-      <a class="btn-primary">Get started</a>
+      <a href="register.php" class="btn-primary">Get started</a>
 
     </div>
     <div class="hero__img">
-      <img src="../images/hero_img.svg" alt="Time management image">
+      <img src="./images/hero_img.svg" alt="Time management image">
     </div>
   </section>
 
   <!-- About section -->
-  <section class="about container">
+  <section class="about container" id="about">
     <h3 class="about__title">About us</h3>
 
     <div class="about__content">
@@ -51,7 +40,7 @@
   </section>
 
   <!-- Statistics section -->
-  <section class="statistics container">
+  <section class="statistics container" id="statistics">
     <h3 class="statistics__title">Statistics</h3>
 
     <div class="statistics__container">
@@ -90,7 +79,7 @@
       </div>
 
       <div class="statistics__img">
-        <img src="../images//statistics_img.svg" alt="Statistics image">
+        <img src="./images//statistics_img.svg" alt="Statistics image">
       </div>
     </div>
   </section>
