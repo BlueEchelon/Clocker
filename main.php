@@ -5,7 +5,6 @@
 
 <body>
   <?php require_once "_navbar_main.php" ?>
-
   <main>
     <div class="container">
       <div>

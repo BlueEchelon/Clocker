@@ -1,5 +1,9 @@
 <?php
 session_start();
-unset($_SESSION);
+unset($_SESSION["ID"]);
+unset($_SESSION["email"]);
+unset($_SESSION["name"]);
+unset($_SESSION["surname"]);
+unset($_SESSION["role"]);
 header("Location:index.php");
 ?>

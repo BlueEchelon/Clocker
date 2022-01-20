@@ -29,14 +29,7 @@ if (isset($_POST['submit'])) {
                 if (password_verify($password, $password_hash)) {
                     unset($getRow['password']);
                     $_SESSION = $getRow;
-                    header('location:main.php');
-                    exit();
-                }
-
-
-                if ($password == $getRow['password']) {
-                    unset($getRow['password']);
-                    $_SESSION = $getRow;
+                    //echo print_r($_SESSION);
                     header('location:main.php');
                     exit();
                 } else $errors[] = "Wrong Email or Password";
