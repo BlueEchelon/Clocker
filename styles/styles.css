@@ -52,8 +52,16 @@ img {
   padding: 2rem;
 }
 
-/* Button styles */
+/* Utility classes */
+.working {
+  color: red;
+}
 
+.not-working {
+  color: limegreen;
+}
+
+/* Button styles */
 a {
   text-decoration: none;
   color: inherit;
@@ -73,6 +81,20 @@ a {
 
 .btn-primary--filled {
   background-image: var(--bg-gradient-btn);
+}
+
+.details {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.5rem 0.7rem;
+  font-size: 1.4rem;
+  color: var(--white);
+  cursor: pointer;
+}
+
+option {
+  color: #000;
 }
 
 /* Navbar */
@@ -363,6 +385,76 @@ a {
   text-decoration: underline;
 }
 
+/* Main */
+.last-projects,
+.recent-groups,
+.projects {
+  margin-top: 4rem;
+  padding: 2rem;
+  border: 2px solid var(--gradient-clr-primary);
+  border-radius: 1rem;
+}
+
+.last-projects__title,
+.recent-groups__title,
+.projects__title,
+.groups__title {
+  font-size: 2.5rem;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--gradient-clr-primary);
+}
+
+.last-projects__header,
+.last-projects__row,
+.recent-groups__header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2.25rem;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.recent-groups__header {
+  justify-content: center;
+}
+
+.last-projects__row,
+.recent-groups__row {
+  font-size: 1.7rem;
+}
+
+.recent-groups__row {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Projects and groups */
+.add-project__container {
+  display: flex;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.projects__container {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.projects__row-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  font-size: 1.7rem;
+  position: relative;
+}
+
+.projects__header {
+  font-size: 2.25rem;
+  margin-top: 2rem;
+}
+
 /* 767px */
 @media screen and (max-width: 47.9375em) {
   .hero {
@@ -384,6 +476,12 @@ a {
   .statistics__container {
     flex-direction: column;
     gap: 4rem;
+  }
+
+  .add-project__container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 }
 
