@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
 
+if(!isset($_SESSION['ID']))
+{
+    header('Location: index.php');
+    exit();
+}
+?>
 <?php require_once "_head.php" ?>
 
 <body>
@@ -8,7 +16,7 @@
 
   <div class="container">
     <div>
-      <h2>E-Nurse - Jan Kowalski</h2>
+      <h2>E-Nurse - <?php echo $_SESSION['name'] ?></h2>
     </div>
 
     <div class="add-project__container">
