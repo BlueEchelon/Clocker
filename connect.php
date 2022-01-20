@@ -1,7 +1,7 @@
 <?php
     $dsn = "mysql:dbname=clocker_db;host=localhost";
     $dbuser = "root";
-    $dbpassword = "";
+    $dbpassword = "password";
 
     try{
         $pdo  = new PDO($dsn, $dbuser, $dbpassword);
