@@ -85,14 +85,7 @@ if (isset($_POST['submit'])) {
 <body>
   <?php
     require_once "_navbar.php";
-    if (isset($errors) && count($errors) > 0) {
-        foreach ($errors as $error_msg) {
-            echo '<div class="alert alert-danger">' . $error_msg . '</div>';
-        }
-    }
-    if (isset($success)) {
-        echo '<div class="alert alert-success">' . $success . '</div>';
-    }
+
     ?>
   <form class="form" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <h4 class="form__title">Sign up</h4>
@@ -111,6 +104,16 @@ if (isset($_POST['submit'])) {
       placeholder="Confirm password"
       value="<?php echo (isset($valConPassword) ? $valConPassword : '') ?>">
 
+    <?php if (isset($errors) && count($errors) > 0) {
+            foreach ($errors as $error_msg) {
+                echo '<div style="color: red;">' . $error_msg . '</div>';
+            }
+        }
+        if (isset($success)) {
+            echo '<div style="color: limegreen;">' . $success . '</div>';
+        }
+        ?>
+
     <input type="submit" name="submit" value="Sign up"
       class="form__btn btn-primary btn-primary--filled" />
 
@@ -119,6 +122,5 @@ if (isset($_POST['submit'])) {
         in</a></p>
   </form>
 </body>
-
 
 </html>

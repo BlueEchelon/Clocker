@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
     <?php
         if (isset($errors) && count($errors) > 0) {
             foreach ($errors as $error_msg) {
-                echo '<div class="alert alert-danger">' . $error_msg . '</div>';
+                echo '<div style="color: red;">' . $error_msg . '</div>';
             }
         }
         ?>

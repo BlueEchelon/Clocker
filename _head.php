@@ -7,7 +7,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Roboto:wght@300;400;500;700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="./styles/styles.css">
-  <script src='./app.js' defer></script>
+  <link rel="stylesheet" href="./styles/styles.css?v=<?php echo time() ?>">
+  <script src='./app.js?v=<?php echo time() ?>">' defer></script>
   <title>Clocker</title>
 </head>
