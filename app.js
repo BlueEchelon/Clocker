@@ -28,3 +28,12 @@ mobileLinks.forEach((link) => {
     document.body.style.overflow = 'auto'
   })
 })
+
+const editBtn = document.getElementById('edit-task')
+const projectNames = document.querySelectorAll('#project-name')
+
+Array.from(projectNames).forEach((project) => {
+  project.addEventListener('click', () => {
+    editBtn.value = project.innerText
+  })
+})
