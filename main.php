@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Roboto:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="../styles/styles.css">
-    <title>Clocker</title>
-</head>
+<?php require_once "_head.php" ?>
 
 <body>
-<?php require_once "_navbar.php" ?>
+  <?php require_once "_navbar_main.php" ?>
+
+  <main>
+    <div class="container">
+      <div>
+        <h2>Hello, testuser123!</h2>
+      </div>
+
+      <div class="last-projects">
+        <h3 class="last-projects__title">Last projects</h3>
+
+        <div class="last-projects__header">
+          <span>Title</span>
+          <span>Number of tasks</span>
+        </div>
+        <div class="last-projects__row">
+          <span>Clocker</span>
+          <span>69</span>
+        </div>
+        <div class="last-projects__row">
+          <span>E-Nurse</span>
+          <span>69</span>
+        </div>
+        <div class="last-projects__row">
+          <span>Scrumex</span>
+          <span>69</span>
+        </div>
+      </div>
+
+      <div class="recent-groups">
+        <h3 class="recent-groups__title">Recent groups</h3>
+
+        <div class="recent-groups__header">
+          <span>Name</span>
+        </div>
+
+        <div class="recent-groups__row">
+          <span>Group 1</span>
+        </div>
+        <div class="recent-groups__row">
+          <span>Group 2</span>
+        </div>
+        <div class="recent-groups__row">
+          <span>Group 3</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
