@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+session_start();
+unset($_SESSION['p_id']);
+if(!isset($_SESSION['ID']))
+{
+    header('Location: index.php');
+    exit();
+}
+?>
 <?php require_once "_head.php" ?>
 
 <body>
@@ -23,29 +31,30 @@
           <span>Client</span>
           <span>Number of tasks</span>
         </div>
+          <?php
+          require_once "connect.php";
 
-        <div class="projects__row-container">
-          <span>Project 1</span>
-          <span>Client 1</span>
-          <span>69</span>
-          <a href="project_details.php"
-            class="details btn-primary--filled">Details</a>
-        </div>
-        <div class="projects__row-container">
-          <span>Project 2</span>
-          <span>Client 2</span>
-          <span>69</span>
-          <a href="project_details.php"
-            class="details btn-primary--filled">Details</a>
-        </div>
-        <div class="projects__row-container">
-          <span>Project 3</span>
-          <span>Client 3</span>
-          <span>69</span>
-          <a href="project_details.php"
-            class="details btn-primary--filled">Details</a>
-        </div>
-
+          $id = $_SESSION['ID'];
+          $sql = "SELECT p.name,p.ID , c.name as Klient ,COUNT(*) as Licznik   FROM projects as p JOIN tasks as t ON (t.project_id=p.ID), clients as c WHERE p.user_id=:id AND c.ID = p.client_id GROUP BY p.ID ORDER BY p.ID DESC";
+          $handle = $pdo->prepare($sql);
+          $params = ['id' => $id];
+          $handle->execute($params);
+          if($handle->rowCount()>0){
+              while($getRow = $handle->fetch(PDO::FETCH_ASSOC)){
+                  $name=$getRow['name'];
+                  $client=$getRow['Klient'];
+                  $counter=$getRow['Licznik'];
+                  $p_id=$getRow['ID'];
+                  echo '<div class="projects__row-container">
+                          <span>'.$name.'</span>
+                          <span>'.$client.'</span>
+                          <span>'.$counter.'</span>
+                          <a href="project_details.php?id='.$p_id.'"
+                            class="details btn-primary--filled">Details</a>
+                          </div>';
+              }
+          }
+          ?>
       </div>
     </div>
 

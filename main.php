@@ -44,14 +44,6 @@ if(!isset($_SESSION['ID']))
               }
           }
           ?>
-        <div class="last-projects__row">
-          <span>E-Nurse</span>
-          <span>69</span>
-        </div>
-        <div class="last-projects__row">
-          <span>Scrumex</span>
-          <span>69</span>
-        </div>
       </div>
 
       <div class="recent-groups">
@@ -60,16 +52,21 @@ if(!isset($_SESSION['ID']))
         <div class="recent-groups__header">
           <span>Name</span>
         </div>
+          <?php
+          require_once "connect.php";
 
-        <div class="recent-groups__row">
-          <span>Group 1</span>
-        </div>
-        <div class="recent-groups__row">
-          <span>Group 2</span>
-        </div>
-        <div class="recent-groups__row">
-          <span>Group 3</span>
-        </div>
+          $id = $_SESSION['ID'];
+          $sql = "SELECT g.name   FROM users as u,groups as g JOIN members as m ON (m.group_id=g.ID) WHERE u.ID=:id AND m.user_id =:id GROUP BY g.ID ORDER BY g.ID DESC";
+          $handle = $pdo->prepare($sql);
+          $params = ['id' => $id];
+          $handle->execute($params);
+          if($handle->rowCount()>0){
+              while($getRow = $handle->fetch(PDO::FETCH_ASSOC)){
+                  $name=$getRow['name'];
+                  echo '<div class="recent-groups__row"><span>'.$name.'</span></div>';
+              }
+          }
+          ?>
       </div>
     </div>
   </main>
