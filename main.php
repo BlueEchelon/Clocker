@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <?php
 session_start();
 
 if(!isset($_SESSION['ID']))
 {
-header('Location: index.php');
-exit();
+    header('Location: index.php');
+    exit();
 }
 ?>
+
 <?php require_once "_head.php" ?>
 
 <body>
@@ -16,7 +18,7 @@ exit();
   <main>
     <div class="container">
       <div>
-        <h2>Hello, <?php echo $_SESSION['name'] ?>!</h2>
+        <h2>Hello, <?php echo $_SESSION['name'].' '.$_SESSION['surname']?>!</h2>
       </div>
 
       <div class="last-projects">
@@ -26,10 +28,22 @@ exit();
           <span>Title</span>
           <span>Number of tasks</span>
         </div>
-        <div class="last-projects__row">
-          <span>Clocker</span>
-          <span>69</span>
-        </div>
+          <?php
+            require_once "connect.php";
+
+          $id = $_SESSION['ID'];
+          $sql = "SELECT p.name ,COUNT(*) as Licznik   FROM projects as p JOIN tasks as t ON (t.project_id=p.ID) WHERE p.user_id=:id GROUP BY p.ID ORDER BY p.ID DESC";
+          $handle = $pdo->prepare($sql);
+          $params = ['id' => $id];
+          $handle->execute($params);
+          if($handle->rowCount()>0){
+              while($getRow = $handle->fetch(PDO::FETCH_ASSOC)){
+                  $name=$getRow['name'];
+                  $counter=$getRow['Licznik'];
+                  echo '<div class="last-projects__row"> <span>'.$name.'</span> <span>'.$counter.'</span> </div>';
+              }
+          }
+          ?>
         <div class="last-projects__row">
           <span>E-Nurse</span>
           <span>69</span>

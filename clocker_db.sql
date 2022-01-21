@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Czas generowania: 15 Sty 2022, 16:56
--- Wersja serwera: 10.5.12-MariaDB
--- Wersja PHP: 7.3.32
+-- Host: 127.0.0.1
+-- Czas generowania: 21 Sty 2022, 14:03
+-- Wersja serwera: 10.4.22-MariaDB
+-- Wersja PHP: 8.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -34,6 +33,14 @@ CREATE TABLE `clients` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Zrzut danych tabeli `clients`
+--
+
+INSERT INTO `clients` (`ID`, `name`, `user_id`) VALUES
+(1, 'Januszex Firma spierdolona', 8),
+(2, 'NBP - Narodowy Biznes Pojebańców', 8);
+
 -- --------------------------------------------------------
 
 --
@@ -44,6 +51,13 @@ CREATE TABLE `groups` (
   `ID` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Zrzut danych tabeli `groups`
+--
+
+INSERT INTO `groups` (`ID`, `name`) VALUES
+(1, 'Grupa TESSSSS');
 
 -- --------------------------------------------------------
 
@@ -56,6 +70,13 @@ CREATE TABLE `members` (
   `group_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Zrzut danych tabeli `members`
+--
+
+INSERT INTO `members` (`user_id`, `group_id`) VALUES
+(8, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -67,8 +88,16 @@ CREATE TABLE `projects` (
   `user_id` int(11) NOT NULL,
   `group_id` int(11) DEFAULT NULL,
   `client_id` int(11) NOT NULL,
-  `name` int(200) NOT NULL
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Zrzut danych tabeli `projects`
+--
+
+INSERT INTO `projects` (`ID`, `user_id`, `group_id`, `client_id`, `name`) VALUES
+(1, 8, NULL, 1, 'Projekt Testowy 1'),
+(2, 8, 1, 2, 'Dla debili');
 
 -- --------------------------------------------------------
 
@@ -84,6 +113,15 @@ CREATE TABLE `tasks` (
   `start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `stop` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Zrzut danych tabeli `tasks`
+--
+
+INSERT INTO `tasks` (`ID`, `project_id`, `name`, `description`, `start`, `stop`) VALUES
+(1, 1, 'Task1', '0', '2022-01-21 12:27:49', '0000-00-00 00:00:00'),
+(2, 1, 'Task1', 'Brak', '2022-01-21 12:28:36', '2022-01-21 13:28:01'),
+(3, 2, 'TEST', 'Dupa', '2022-01-21 12:54:55', '2022-01-21 16:54:38');
 
 -- --------------------------------------------------------
 
@@ -106,7 +144,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`ID`, `email`, `password`, `name`, `surname`, `role`) VALUES
 (1, 'test@op.pl', 'test', 'name', 'surname', 'a'),
-(2, 'abcd@xyz.pl', 'abcd', 'abcd', 'xyz', 'a');
+(2, 'abcd@xyz.pl', 'abcd', 'abcd', 'xyz', 'a'),
+(3, 'kkk@kk.pl', 'k', 'kk', 'kkk', 'u'),
+(5, 'jebal@male.dzieci', '$2y$04$UVd34QPT3Uq.dRqdcw7MRO5', 'Jan', 'Paweł II', 'u'),
+(6, 'test2@op.pl', '$2y$04$SBWbgERXhKmTiT05k3/FQOA', 'test2', 'test2', 'u'),
+(7, 'test3@op.pl', '$2y$04$XM5bUZFY6lvVw9ZvOP0JHu3', 'test3', 'test3', 'u'),
+(8, 'test4@op.pl', '$2y$04$bSMCEUEuPapdRkSQxbk08.tL18Mr5R453eRTWJQvtqTUUuOSRYBM6', 'test4', 'test', 'u');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -143,38 +186,38 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`ID`);
 
 --
--- AUTO_INCREMENT dla tabel zrzutów
+-- AUTO_INCREMENT dla zrzuconych tabel
 --
 
 --
 -- AUTO_INCREMENT dla tabeli `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
