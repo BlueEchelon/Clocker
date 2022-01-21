@@ -76,7 +76,7 @@ else{
           require_once "connect.php";
 
           $id = $_SESSION['p_id'];
-          $sql = "SELECT t.name, t.start , t.stop FROM tasks as t WHERE t.project_id=:id ORDER BY t.ID DESC";
+          $sql = "SELECT t.name, t.start , t.stop, t.status FROM tasks as t WHERE t.project_id=:id ORDER BY t.ID DESC";
           $handle = $pdo->prepare($sql);
           $params = ['id' => $id];
           $handle->execute($params);
@@ -86,10 +86,12 @@ else{
                   $start=$timestamp = strtotime($getRow['start']);
                   $stop=$timestamp = strtotime($getRow['stop']);
                   $stop=date("H:i:s",$stop-$start);
+                  if($getRow['status']==1) $status = 'STOP';
+                  else $status = 'START';
                   echo '<div class="projects__row-container">
                           <span id="project-name">'.$name.'</span>
                           <span class="working">'.$stop.'</span>
-                          <a class="details btn-primary--filled">Stop</a>
+                          <a class="details btn-primary--filled">'.$status.'</a>
                         </div>';
               }
           }

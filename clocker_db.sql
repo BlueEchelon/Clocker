@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 21 Sty 2022, 14:03
+-- Czas generowania: 21 Sty 2022, 22:52
 -- Wersja serwera: 10.4.22-MariaDB
 -- Wersja PHP: 8.1.1
 
@@ -39,7 +39,9 @@ CREATE TABLE `clients` (
 
 INSERT INTO `clients` (`ID`, `name`, `user_id`) VALUES
 (1, 'Januszex Firma spierdolona', 8),
-(2, 'NBP - Narodowy Biznes Pojebańców', 8);
+(2, 'NBP - Narodowy Biznes Pojebańców', 8),
+(3, 'KAKA', 8),
+(4, 'TEST', 8);
 
 -- --------------------------------------------------------
 
@@ -57,7 +59,9 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`ID`, `name`) VALUES
-(1, 'Grupa TESSSSS');
+(1, 'Grupa TESSSSS'),
+(2, 'Brains'),
+(3, 'TEST WSPólny');
 
 -- --------------------------------------------------------
 
@@ -75,7 +79,10 @@ CREATE TABLE `members` (
 --
 
 INSERT INTO `members` (`user_id`, `group_id`) VALUES
-(8, 1);
+(8, 1),
+(7, 2),
+(8, 3),
+(7, 3);
 
 -- --------------------------------------------------------
 
@@ -97,7 +104,8 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`ID`, `user_id`, `group_id`, `client_id`, `name`) VALUES
 (1, 8, NULL, 1, 'Projekt Testowy 1'),
-(2, 8, 1, 2, 'Dla debili');
+(2, 8, 1, 2, 'Dla debili'),
+(12, 8, NULL, 4, 'TEST');
 
 -- --------------------------------------------------------
 
@@ -111,17 +119,17 @@ CREATE TABLE `tasks` (
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `stop` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `stop` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Zrzut danych tabeli `tasks`
 --
 
-INSERT INTO `tasks` (`ID`, `project_id`, `name`, `description`, `start`, `stop`) VALUES
-(1, 1, 'Task1', '0', '2022-01-21 12:27:49', '0000-00-00 00:00:00'),
-(2, 1, 'Task1', 'Brak', '2022-01-21 12:28:36', '2022-01-21 13:28:01'),
-(3, 2, 'TEST', 'Dupa', '2022-01-21 12:54:55', '2022-01-21 16:54:38');
+INSERT INTO `tasks` (`ID`, `project_id`, `name`, `description`, `start`, `stop`, `status`) VALUES
+(1, 1, 'Task1', '0', '2022-01-21 21:46:22', '2022-01-21 21:46:14', 0),
+(2, 1, 'Task1', 'Brak', '2022-01-21 12:28:36', '2022-01-21 13:28:01', 0);
 
 -- --------------------------------------------------------
 
@@ -193,19 +201,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=891;
 
 --
 -- AUTO_INCREMENT dla tabeli `tasks`
