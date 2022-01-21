@@ -19,7 +19,8 @@ if (isset($_POST['submit'])) {
                 $params = ['email' => $email];
                 $handle->execute($params);
                 if ($handle->rowCount() == 0) {
-                    $sql = "INSERT INTO users (email, password, name, surname, role) values (:email,:passw,:fname,:sur,:urole)";
+                    $sql = "INSERT INTO users (email, password, name, surname, role) 
+                                        values (:email, :passw, :fname, :sur, :urole)";
                     try {
                         $handle = $pdo->prepare($sql);
                         $params = [

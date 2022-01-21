@@ -32,7 +32,12 @@ if(!isset($_SESSION['ID']))
             require_once "connect.php";
 
           $id = $_SESSION['ID'];
-          $sql = "SELECT p.name ,COUNT(*) as Licznik   FROM projects as p JOIN tasks as t ON (t.project_id=p.ID) WHERE p.user_id=:id GROUP BY p.ID ORDER BY p.ID DESC";
+          $sql = "SELECT p.name ,COUNT(t.ID) as Licznik   
+FROM projects as p 
+LEFT JOIN tasks as t ON (t.project_id=p.ID) 
+WHERE p.user_id=:id
+GROUP BY p.name 
+ORDER BY p.ID DESC";
           $handle = $pdo->prepare($sql);
           $params = ['id' => $id];
           $handle->execute($params);
