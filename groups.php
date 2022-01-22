@@ -4,7 +4,7 @@
 <?php require_once "_head.php" ?>
 <?php
 session_start();
-unset($_SESSION['G_id']);
+unset($_SESSION['g_id']);
 if (!isset($_SESSION['ID'])) {
     header('Location: index.php');
     exit();
