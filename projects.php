@@ -107,6 +107,12 @@ if (isset($_POST['Add'])) {
         <input type="submit"  name="Add" value="Add project"
                class="form__btn btn-primary btn-primary--filled"/>
     </form>
+    <?php if (isset($errors) && count($errors) > 0) {
+        foreach ($errors as $error_msg) {
+            echo '<div style="color: red;">' . $error_msg . '</div>';
+        }
+    }
+    ?>
 
     <div class="projects">
         <h3 class="projects__title">Your projects</h3>

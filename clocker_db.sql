@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 21 Sty 2022, 22:52
+-- Czas generowania: 22 Sty 2022, 14:08
 -- Wersja serwera: 10.4.22-MariaDB
 -- Wersja PHP: 8.1.1
 
@@ -105,7 +105,8 @@ CREATE TABLE `projects` (
 INSERT INTO `projects` (`ID`, `user_id`, `group_id`, `client_id`, `name`) VALUES
 (1, 8, NULL, 1, 'Projekt Testowy 1'),
 (2, 8, 1, 2, 'Dla debili'),
-(12, 8, NULL, 4, 'TEST');
+(12, 8, NULL, 4, 'TEST'),
+(891, 8, NULL, 4, 'TEST2');
 
 -- --------------------------------------------------------
 
@@ -118,18 +119,23 @@ CREATE TABLE `tasks` (
   `project_id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `start` timestamp NOT NULL DEFAULT current_timestamp(),
   `stop` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` tinyint(1) NOT NULL
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `timer` time NOT NULL DEFAULT '00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Zrzut danych tabeli `tasks`
 --
 
-INSERT INTO `tasks` (`ID`, `project_id`, `name`, `description`, `start`, `stop`, `status`) VALUES
-(1, 1, 'Task1', '0', '2022-01-21 21:46:22', '2022-01-21 21:46:14', 0),
-(2, 1, 'Task1', 'Brak', '2022-01-21 12:28:36', '2022-01-21 13:28:01', 0);
+INSERT INTO `tasks` (`ID`, `project_id`, `name`, `description`, `start`, `stop`, `status`, `timer`) VALUES
+(1, 1, 'Task1', '0', '2022-01-21 21:46:22', '2022-01-21 21:46:14', 0, '00:00:00'),
+(2, 1, 'Task1', 'Brak', '2022-01-21 12:28:36', '2022-01-21 13:28:01', 0, '00:00:00'),
+(4, 1, 'TEST3', '', '2022-01-22 10:41:20', '2022-01-22 10:41:20', 0, '00:00:00'),
+(5, 1, 'aaa', '', '2022-01-22 11:29:35', '2022-01-22 11:29:35', 0, '00:00:00'),
+(6, 2, 'abcd', '', '2022-01-22 11:30:29', '2022-01-22 11:30:29', 0, '00:00:00'),
+(7, 12, 'test4', '', '2022-01-22 11:30:44', '2022-01-22 11:30:44', 0, '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -213,13 +219,13 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT dla tabeli `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=891;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=892;
 
 --
 -- AUTO_INCREMENT dla tabeli `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
