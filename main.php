@@ -37,7 +37,8 @@ FROM projects as p
 LEFT JOIN tasks as t ON (t.project_id=p.ID) 
 WHERE p.user_id=:id
 GROUP BY p.name 
-ORDER BY p.ID DESC";
+ORDER BY p.ID DESC
+LIMIT 3";
           $handle = $pdo->prepare($sql);
           $params = ['id' => $id];
           $handle->execute($params);
@@ -61,7 +62,8 @@ ORDER BY p.ID DESC";
           require_once "connect.php";
 
           $id = $_SESSION['ID'];
-          $sql = "SELECT g.name   FROM users as u,groups as g JOIN members as m ON (m.group_id=g.ID) WHERE u.ID=:id AND m.user_id =:id GROUP BY g.ID ORDER BY g.ID DESC";
+//          $sql = "SELECT g.name   FROM users as u,groups as g JOIN members as m ON (m.group_id=g.ID) WHERE u.ID=:id AND m.user_id =:id GROUP BY g.ID ORDER BY g.ID DESC";
+          $sql = "select g.name from clocker_db.groups g, members m where g.ID=m.group_id and user_id=:id ORDER BY g.ID DESC LIMIT 3";
           $handle = $pdo->prepare($sql);
           $params = ['id' => $id];
           $handle->execute($params);
