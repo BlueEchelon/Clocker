@@ -4,7 +4,7 @@
 <?php require_once "_head.php" ?>
 <?php
 session_start();
-
+unset($_SESSION['G_id']);
 if (!isset($_SESSION['ID'])) {
     header('Location: index.php');
     exit();
@@ -72,7 +72,7 @@ if (!isset($_SESSION['ID'])) {
                     echo '<div class="projects__row-container">
                                   <span>' . $name . '</span>
                                   <span>' . $counter['Licznik'] . '</span>
-                                  <a href="groups_details.php?id=' . $group_id . '"
+                                  <a href="group_details.php?G_id=' . $group_id . '"
                                     class="details btn-primary--filled">Details</a>
                                   </div>';
                 }

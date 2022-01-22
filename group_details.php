@@ -2,7 +2,16 @@
 <html lang="en">
 
 <?php require_once "_head.php" ?>
-
+<?php
+session_start();
+if (!isset($_SESSION['g_id'])){
+    $_SESSION['g_id']=$_GET['G_id'];
+}
+if (!isset($_SESSION['ID'])) {
+    header('Location: index.php');
+    exit();
+}
+?>
 <body>
   <?php require_once "_navbar_main.php" ?>
 

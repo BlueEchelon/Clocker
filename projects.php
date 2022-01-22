@@ -86,58 +86,6 @@ if (isset($_POST['Add'])) {
                 }
             }
         }
-            /*
-            $sql = "INSERT INTO projects (email, password, name, surname, role) values (:email, :passw, :fname, :sur, :urole)";
-            try {
-                $handle = $pdo->prepare($sql);
-                $params = [
-                        ':p_name' => $email,
-                        ':Client' => $hashPassword,
-                        ':u_id' =>$_SESSION['ID'],
-                        ];
-                        $handle->execute($params);
-                        $success = 'User has been created successfully;';
-                    } catch (PDOException $e) {
-                        $errors[] = $e->getMessage();
-                    }
-                } else {
-                    $valName = $name;
-                    $valSurName = $surname;
-                    $valEmail = '';
-                    $valPassword = $password;
-                    $valConPassword = $confirmPass;
-
-                    $errors[] = 'Email address already registered';
-                }
-            } else $errors[] = "Email address is not valid";
-    } else {
-        if (!isset($_POST['name']) || empty($_POST['name'])) {
-            $errors[] = 'First name is required';
-        } else {
-            $valName = $_POST['name'];
-        }
-        if (!isset($_POST['surname']) || empty($_POST['surname'])) {
-            $errors[] = 'Surname is required';
-        } else {
-            $valSurName = $_POST['surname'];
-        }
-
-        if (!isset($_POST['email']) || empty($_POST['email'])) {
-            $errors[] = 'Email is required';
-        } else {
-            $valEmail = $_POST['email'];
-        }
-
-        if (!isset($_POST['password']) || empty($_POST['password'])) {
-            $errors[] = 'Password is required';
-        } else {
-            $valPassword = $_POST['password'];
-        }
-        if (!isset($_POST['confirmPass']) || empty($_POST['confirmPass'])) {
-            $errors[] = 'Password is required';
-        } else {
-            $valConPassword = $_POST['confirmPass'];
-        }*/
     }
 }
 
