@@ -39,7 +39,11 @@ if (isset($_POST['Add'])) {
                     } catch (PDOException $e) {
                         $errors[] = $e->getMessage();
                     }
-                    break;
+                } else {
+                    $valName = $p_name;
+                    $valClient = $client;
+
+                    $errors[] = 'Email address already registered';
                 }
             }
         }else{
@@ -74,22 +78,66 @@ if (isset($_POST['Add'])) {
                         } catch (PDOException $e) {
                             $errors[] = $e->getMessage();
                         }
-                        break;
+                    } else {
+                        $valName = $p_name;
+                        $valClient = $client;
+                        $errors[] = 'Email address already registered';
                     }
                 }
             }
         }
+            /*
+            $sql = "INSERT INTO projects (email, password, name, surname, role) values (:email, :passw, :fname, :sur, :urole)";
+            try {
+                $handle = $pdo->prepare($sql);
+                $params = [
+                        ':p_name' => $email,
+                        ':Client' => $hashPassword,
+                        ':u_id' =>$_SESSION['ID'],
+                        ];
+                        $handle->execute($params);
+                        $success = 'User has been created successfully;';
+                    } catch (PDOException $e) {
+                        $errors[] = $e->getMessage();
+                    }
+                } else {
+                    $valName = $name;
+                    $valSurName = $surname;
+                    $valEmail = '';
+                    $valPassword = $password;
+                    $valConPassword = $confirmPass;
+
+                    $errors[] = 'Email address already registered';
+                }
+            } else $errors[] = "Email address is not valid";
     } else {
-        if (!isset($_POST['project_name']) || empty($_POST['project_name'])) {
-            $errors[] = 'Project name is required';
+        if (!isset($_POST['name']) || empty($_POST['name'])) {
+            $errors[] = 'First name is required';
         } else {
-            $valName = $_POST['project_name'];
+            $valName = $_POST['name'];
         }
-        if (!isset($_POST['client']) || empty($_POST['client'])) {
-            $errors[] = 'Client is required';
+        if (!isset($_POST['surname']) || empty($_POST['surname'])) {
+            $errors[] = 'Surname is required';
         } else {
-            $valSurName = $_POST['client'];
+            $valSurName = $_POST['surname'];
         }
+
+        if (!isset($_POST['email']) || empty($_POST['email'])) {
+            $errors[] = 'Email is required';
+        } else {
+            $valEmail = $_POST['email'];
+        }
+
+        if (!isset($_POST['password']) || empty($_POST['password'])) {
+            $errors[] = 'Password is required';
+        } else {
+            $valPassword = $_POST['password'];
+        }
+        if (!isset($_POST['confirmPass']) || empty($_POST['confirmPass'])) {
+            $errors[] = 'Password is required';
+        } else {
+            $valConPassword = $_POST['confirmPass'];
+        }*/
     }
 }
 
@@ -111,12 +159,6 @@ if (isset($_POST['Add'])) {
         <input type="submit"  name="Add" value="Add project"
                class="form__btn btn-primary btn-primary--filled"/>
     </form>
-    <?php if (isset($errors) && count($errors) > 0) {
-        foreach ($errors as $error_msg) {
-            echo '<div style="color: red;">' . $error_msg . '</div>';
-        }
-    }
-    ?>
 
     <div class="projects">
         <h3 class="projects__title">Your projects</h3>
@@ -147,10 +189,10 @@ ORDER BY p.ID DESC";
                     $counter = $getRow['Licznik'];
                     $p_id = $getRow['ID'];
                     echo '<div class="projects__row-container">
-                                  <span>'.$name.'</span>
-                                  <span>'.$client.'</span>
-                                  <span>'.$counter.'</span>
-                                  <a href="project_details.php?P_id='.$p_id.'"
+                                  <span>' . $name . '</span>
+                                  <span>' . $client . '</span>
+                                  <span>' . $counter . '</span>
+                                  <a href="project_details.php?P_id=' . $p_id . '"
                                     class="details btn-primary--filled">Details</a>
                                   </div>';
                 }
