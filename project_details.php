@@ -66,25 +66,44 @@ if (isset($_POST['Add'])) { // dodawanie tasków
     }
 }
 
-if (isset($_POST['Time'])) { //przyciski STOP/START z update'em do bazy timestampa
-    if (isset($_POST['task_name']) && !empty($_POST['task_name'])) {
-        $t_name = trim(filter_var($_POST['task_name'], FILTER_SANITIZE_STRING));
-        $sql = "INSERT INTO tasks (project_id,name) values (:projectId, :t_name)";
-        try {
+if (isset($_POST['button'])) { //przyciski STOP/START z update'em do bazy timestampa
+    $t_id = trim(filter_var($_POST['task_id'], FILTER_SANITIZE_STRING));
+    $sql = "select * FROM tasks WHERE ID=:id";
+    $handle = $pdo->prepare($sql);
+    $params = ['id' => $t_id];
+    $handle->execute($params);
+    if($handle->rowCount()>0){
+        $getRow = $handle->fetch(PDO::FETCH_ASSOC);
+        if ($getRow['status']==0){
+            $updt = "update tasks set start=now(),status=1 WHERE ID=:id";
+            $handle = $pdo->prepare($updt);
+            $params = ['id' => $t_id];
+            $handle->execute($params);
+        }else{
+            $updt = "update tasks set stop=now() WHERE ID=:id";
+            $handle = $pdo->prepare($updt);
+            $params = ['id' => $t_id];
+            $handle->execute($params);
+
+            $sql = "select start,stop,timer from tasks where ID=:id";
             $handle = $pdo->prepare($sql);
+            $params = ['id' => $t_id];
+            $handle->execute($params);
+            $getRow = $handle->fetch(PDO::FETCH_ASSOC);
+            $start=strtotime($getRow['start']);
+            $stop=strtotime($getRow['stop']);
+            $timer=strtotime($getRow['timer']);
+            $past=$stop-$start + $timer;
+            $time=date("H:i:s",$past);
+
+            $updt = "update tasks set status=0 , timer=:time WHERE ID=:id";
+            $handle = $pdo->prepare($updt);
             $params = [
-                ':projectId'=>$_SESSION['p_id'],
-                ':t_name' => $t_name,
+                'id' => $t_id,
+                'time' => $time
             ];
             $handle->execute($params);
-        }catch (PDOException $e) {
-            $errors[] = $e->getMessage();
-        }
-    }else {
-        if (!isset($_POST['task_name']) || empty($_POST['task_name'])) {
-            $errors[] = 'Task name is required';
-        } else {
-            $valName = $_POST['task_name'];
+
         }
     }
 }
@@ -179,15 +198,20 @@ if (isset($_POST['submit_task'])) { // zmiana opisu taska
                   $timer=date("H:i:s",$timer);
                   if($getRow['status']==1){
                       $status = 'STOP';
+                      $classa='class="not-working"';
                   }
-                  else $status = 'START';
+                  else {
+                      $status = 'START';
+                      $classa='class="working"';
+                  }
                   $t_id=$getRow['ID'];
-                  echo '<div class="projects__row-container" >
+                  echo '<form class="projects__row-container" method="post" action="'.$_SERVER['PHP_SELF'].'">
+                           <input name="task_id" style="display: none" value="'.$t_id.'">
                           <span id="project-name"  >'.$name.'</span>
-                          <span class="working" id="clock">'.$timer.'</span>
+                          <span '.$classa.' id="clock">'.$timer.'</span>
                           <span id="project-name">'.$desc.'</span>
-                          <a type="button" id="timer" class="details btn-primary--filled"  >'.$status.'</a>
-                        </div>';
+                          <input type="submit" name ="button" class="details btn-primary--filled"  value="'.$status.'"/>
+                        </form>';
               }
           }
           ?>
