@@ -20,7 +20,7 @@ if (isset($_POST['submit_group'])) {
     if (isset($_POST['group_name'], $_POST['project_name']) && !empty($_POST['group_name']) && !empty($_POST['project_name'])) {
         $g_name = trim(filter_var($_POST['group_name'], FILTER_SANITIZE_STRING));
         $p_name = trim(filter_var($_POST['project_name'], FILTER_SANITIZE_STRING));
-        debug_to_console($p_name);
+        //debug_to_console($p_name);
         $sql_g = "SELECT * FROM clocker_db.groups WHERE name = :g_name";
         $handle = $pdo->prepare($sql_g);
         $params = ['g_name' => $g_name];
@@ -58,7 +58,7 @@ if (isset($_POST['submit_group'])) {
 
                         $sql_p = "update projects set group_id=:g_id where ID=:p_id";
                         $handle = $pdo->prepare($sql_p);
-                        debug_to_console($p_id);
+                        //debug_to_console($p_id);
                         $params = [
                             ':g_id' => $g_id,
                             ':p_id' =>$p_id

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+function debug_to_console($data)
+{ //debug_to_console("TEST2");
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
 session_start();
 if (!isset($_SESSION['p_id'])){
     $_SESSION['p_id']=$_GET['P_id'];
@@ -33,7 +41,7 @@ else{
     exit();
 }
 
-if (isset($_POST['Add'])) {
+if (isset($_POST['Add'])) { // dodawanie tasków
     if (isset($_POST['task_name']) && !empty($_POST['task_name'])) {
         $t_name = trim(filter_var($_POST['task_name'], FILTER_SANITIZE_STRING));
         $description = trim(filter_var($_POST['description'], FILTER_SANITIZE_STRING));
@@ -58,7 +66,7 @@ if (isset($_POST['Add'])) {
     }
 }
 
-if (isset($_POST['Time'])) {
+if (isset($_POST['Time'])) { //przyciski STOP/START z update'em do bazy timestampa
     if (isset($_POST['task_name']) && !empty($_POST['task_name'])) {
         $t_name = trim(filter_var($_POST['task_name'], FILTER_SANITIZE_STRING));
         $sql = "INSERT INTO tasks (project_id,name) values (:projectId, :t_name)";
@@ -81,6 +89,29 @@ if (isset($_POST['Time'])) {
     }
 }
 
+if (isset($_POST['submit_task'])) { // zmiana opisu taska
+    if (isset($_POST['edit-task'], $_POST['description']) && !empty($_POST['edit-task']) && !empty($_POST['description'])) {
+        $t_name = trim(filter_var($_POST['edit-task'], FILTER_SANITIZE_STRING));
+        $description = trim(filter_var($_POST['description'], FILTER_SANITIZE_STRING));
+        $sql = "update tasks set description=:upd_desc where ID=:t_id";
+        try {
+            $handle = $pdo->prepare($sql);
+            $params = [
+                't_id' => $t_name,
+                'upd_desc' => $description
+            ];
+            $handle->execute($params);
+        }catch (PDOException $e) {
+            $errors[] = $e->getMessage();
+        }
+    }else {
+        if (!isset($_POST['edit-task']) || empty($_POST['edit-task'])) {
+            $errors[] = 'Task name is required';
+        } else {
+            $valDesc = $_POST['description'];
+        }
+    }
+}
 ?>
 <?php require_once "_head.php" ?>
 
@@ -151,24 +182,44 @@ if (isset($_POST['Time'])) {
                   }
                   else $status = 'START';
                   $t_id=$getRow['ID'];
-                  echo '<div class="projects__row-container" href>
+                  echo '<div class="projects__row-container" >
                           <span id="project-name"  >'.$name.'</span>
-                          <span class="working">'.$timer.'</span>
+                          <span class="working" id="clock">'.$timer.'</span>
                           <span id="project-name">'.$desc.'</span>
-                          <a type="button" class="details btn-primary--filled"  >'.$status.'</a>
+                          <a type="button" id="timer" class="details btn-primary--filled"  >'.$status.'</a>
                         </div>';
               }
           }
           ?>
       </div>
     </div>
-
-    <div class="add-project__container">
-      <input class="form__input" id="edit-task" type="text"
-        placeholder="Task name">
-      <input type="submit" value="Edit task"
+    <form class="add-project__container" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <select class="form__input" name="edit-task" type="text" placeholder="Task name">
+            <?php
+            require_once "connect.php";
+            $id = $_SESSION['p_id'];
+            $sql = "select name,ID from tasks where project_id=:id";
+            $handle = $pdo->prepare($sql);
+            $params = ['id' => $id];
+            $handle->execute($params);
+            if ($handle->rowCount() > 0) {
+                while ($getRow = $handle->fetch(PDO::FETCH_ASSOC)) {
+                    $name = $getRow['name'];
+                    $t_id=$getRow['ID'];
+                    echo '<option value=' . $t_id . '>' . $name . '</option>';
+                }
+            }
+            ?>
+            <!--            <option value="Project 1">Project 1</option>-->
+            <!--            <option value="Project 2">Project 2</option>-->
+            <!--            <option value="Project 3">Project 3</option>-->
+        </select>
+        <input class="form__input" type="text" name="description" placeholder="Description"
+               value="<?php echo(isset($valDesc) ? $valDesc : '') ?>">
+      <input type="submit" name="submit_task" value="Edit task"
         class="form__btn btn-primary btn-primary--filled" />
-    </div>
+
+    </form>
   </div>
 
 </body>
