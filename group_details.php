@@ -39,7 +39,7 @@ if (!isset($_SESSION['ID'])) {
 
             }
         }
-        if (isset($_POST['Add'])) {
+        if (isset($_POST['Add_member'])) {
             if (isset($_POST['email']) && !empty($_POST['email'])) {
                 $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_STRING));
                 $sql_g = "SELECT * FROM clocker_db.users WHERE email = :email";
@@ -75,7 +75,7 @@ if (!isset($_SESSION['ID'])) {
         <form class="add-project__container" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <input class="form__input" type="text" name="email" placeholder="Email"
                    value="<?php echo(isset($valName) ? $valName : '') ?>">
-            <input type="submit" name="Add" value="Add task"
+            <input type="submit" name="Add_member" value="Add Member"
                    class="form__btn btn-primary btn-primary--filled"/>
         </form>
     </div>
@@ -86,6 +86,8 @@ if (!isset($_SESSION['ID'])) {
         <div class="projects__container">
             <div class="projects__row-container projects__header">
                 <span>Email</span>
+                <span>Name</span>
+                <span>Surname</span>
             </div>
             <?php
             require_once "connect.php";
@@ -101,6 +103,8 @@ if (!isset($_SESSION['ID'])) {
                     $email = $getRow['email'];
                     echo '<div class="projects__row-container">
                                   <span>' . $email . '</span>
+                                  <span>' . $name . '</span>
+                                  <span>' . $surname . '</span>
                                   </div>';
 
                 }
