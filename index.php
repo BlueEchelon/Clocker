@@ -24,7 +24,7 @@
         <p class="hero__text">Keep track of you work time, create numerous
             projects and increase your
             productivity.</p>
-        <a class="btn-primary">Get started</a>
+        <a class="btn-primary" href="login.php">Get started</a>
 
     </div>
     <div class="hero__img">
