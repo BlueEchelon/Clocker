@@ -36,12 +36,14 @@ else{
 if (isset($_POST['Add'])) {
     if (isset($_POST['task_name']) && !empty($_POST['task_name'])) {
         $t_name = trim(filter_var($_POST['task_name'], FILTER_SANITIZE_STRING));
-        $sql = "INSERT INTO tasks (project_id,name) values (:projectId, :t_name)";
+        $description = trim(filter_var($_POST['description'], FILTER_SANITIZE_STRING));
+        $sql = "INSERT INTO tasks (project_id,name,description) values (:projectId, :t_name, :description)";
         try {
             $handle = $pdo->prepare($sql);
             $params = [
                 'projectId'=>$_SESSION['p_id'],
                 't_name' => $t_name,
+                'description' => $description
             ];
             $handle->execute($params);
         }catch (PDOException $e) {
@@ -108,6 +110,8 @@ if (isset($_POST['Time'])) {
     <form class="add-project__container" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
       <input class="form__input" type="text" name="task_name" placeholder="Task name"
              value="<?php echo (isset($valName) ? $valName : '') ?>">
+        <input class="form__input" type="text" name="description" placeholder="Description"
+               value="<?php echo(isset($valName) ? $valName : '') ?>">
       <input type="submit" name="Add" value="Add task"
         class="form__btn btn-primary btn-primary--filled" />
     </form>
@@ -125,19 +129,21 @@ if (isset($_POST['Time'])) {
         <div class="projects__row-container projects__header">
           <span>Task</span>
           <span>Time</span>
+          <span>Description</span>
         </div>
 
           <?php
           require_once "connect.php";
 
           $id = $_SESSION['p_id'];
-          $sql = "SELECT t.ID,t.name, t.timer, t.status FROM tasks as t WHERE t.project_id=:id ORDER BY t.ID DESC";
+          $sql = "SELECT t.ID,t.name, t.timer, t.description, t.status FROM tasks as t WHERE t.project_id=:id ORDER BY t.ID DESC";
           $handle = $pdo->prepare($sql);
           $params = ['id' => $id];
           $handle->execute($params);
           if($handle->rowCount()>0){
               while($getRow = $handle->fetch(PDO::FETCH_ASSOC)){
                   $name=$getRow['name'];
+                  $desc=$getRow['description'];
                   $timer=strtotime($getRow['timer']);
                   $timer=date("H:i:s",$timer);
                   if($getRow['status']==1){
@@ -148,6 +154,7 @@ if (isset($_POST['Time'])) {
                   echo '<div class="projects__row-container" href>
                           <span id="project-name"  >'.$name.'</span>
                           <span class="working">'.$timer.'</span>
+                          <span class="project-name">'.$desc.'</span>
                           <a type="button" class="details btn-primary--filled"  >'.$status.'</a>
                         </div>';
               }
