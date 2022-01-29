@@ -39,20 +39,47 @@ if (!isset($_SESSION['ID'])) {
 
             }
         }
+        if (isset($_POST['Add'])) {
+            if (isset($_POST['email']) && !empty($_POST['email'])) {
+                $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_STRING));
+                $sql_g = "SELECT * FROM clocker_db.users WHERE email = :email";
+                $handle = $pdo->prepare($sql_g);
+                $params = ['email' => $email];
+                $handle->execute($params);
+                if ($handle->rowCount() > 0) {
+                    $getRow = $handle->fetch(PDO::FETCH_ASSOC);
+                    $user_id = $getRow['ID'];
+
+                    echo $user_id;
+                    $group_id = $_SESSION['g_id'];
+                    $sql = "insert into clocker_db.members (user_id, group_id) values (:user_id, :group_id)";
+                    $handle = $pdo->prepare($sql);
+                    $params = [
+                        ':user_id' => $user_id,
+                        ':group_id' => $group_id,
+                    ];
+                    $handle->execute($params);
+                }
+
+            } else {
+                if (!isset($_POST['task_name']) || empty($_POST['task_name'])) {
+                    $errors[] = 'Task name is required';
+                } else {
+                    $valName = $_POST['task_name'];
+                }
+            }
+        }
         ?>
-        <!--        <h2>Group 1</h2>-->
-        <!--        <h2>Project: E-Nurse </h2>-->
-        <!--        <h2>Client: Jan Kowalski</h2>-->
+
     </div>
 
     <div class="add-project__container">
-        <select class="form__input" type="text" placeholder="Member">
-            <option value="Jan Kowalski">Jan Kowalski</option>
-            <option value="Jan Nowak">Jan Nowak</option>
-            <option value="Jan Nowak">Jan Kwiatkowski</option>
-        </select>
-        <input type="submit" value="Add member"
-               class="form__btn btn-primary btn-primary--filled"/>
+        <form class="add-project__container" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <input class="form__input" type="text" name="email" placeholder="Email"
+                   value="<?php echo(isset($valName) ? $valName : '') ?>">
+            <input type="submit" name="Add" value="Add task"
+                   class="form__btn btn-primary btn-primary--filled"/>
+        </form>
     </div>
 
     <div class="projects">
