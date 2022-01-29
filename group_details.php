@@ -49,8 +49,6 @@ if (!isset($_SESSION['ID'])) {
                 if ($handle->rowCount() > 0) {
                     $getRow = $handle->fetch(PDO::FETCH_ASSOC);
                     $user_id = $getRow['ID'];
-
-                    echo $user_id;
                     $group_id = $_SESSION['g_id'];
                     $sql = "insert into clocker_db.members (user_id, group_id) values (:user_id, :group_id)";
                     $handle = $pdo->prepare($sql);
