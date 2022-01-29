@@ -11,7 +11,7 @@ if (!isset($_SESSION['g_id'])) {
 if (!isset($_SESSION['ID'])) {
     header('Location: index.php');
     exit();
-}// TODO: dodowanie do grup czlonkow
+}
 ?>
 <body>
 <?php require_once "_navbar_main.php" ?>
@@ -60,12 +60,12 @@ if (!isset($_SESSION['ID'])) {
 
         <div class="projects__container">
             <div class="projects__row-container projects__header">
-                <span>Name</span>
+                <span>Email</span>
             </div>
             <?php
             require_once "connect.php";
 
-            $sql = "select u.name, u.surname from users u, clocker_db.groups g, members m where g.ID=:g_id and g.ID=m.group_id and u.ID = m.user_id";
+            $sql = "select u.name, u.surname, u.email from users u, clocker_db.groups g, members m where g.ID=:g_id and g.ID=m.group_id and u.ID = m.user_id";
             $handle = $pdo->prepare($sql);
             $params = ['g_id' => $_SESSION['g_id']];
             $handle->execute($params);
@@ -73,8 +73,9 @@ if (!isset($_SESSION['ID'])) {
                 while ($getRow = $handle->fetch(PDO::FETCH_ASSOC)) {
                     $name = $getRow['name'];
                     $surname = $getRow['surname'];
+                    $email = $getRow['email'];
                     echo '<div class="projects__row-container">
-                                  <span>' . $name . " " . $surname . '</span>
+                                  <span>' . $email . '</span>
                                   </div>';
 
                 }

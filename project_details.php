@@ -154,7 +154,7 @@ if (isset($_POST['Time'])) {
                   echo '<div class="projects__row-container" href>
                           <span id="project-name"  >'.$name.'</span>
                           <span class="working">'.$timer.'</span>
-                          <span class="project-name">'.$desc.'</span>
+                          <span id="project-name">'.$desc.'</span>
                           <a type="button" class="details btn-primary--filled"  >'.$status.'</a>
                         </div>';
               }
