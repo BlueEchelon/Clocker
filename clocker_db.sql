@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 22 Sty 2022, 14:08
+-- Czas generowania: 30 Sty 2022, 12:41
 -- Wersja serwera: 10.4.22-MariaDB
 -- Wersja PHP: 8.1.1
 
@@ -38,10 +38,11 @@ CREATE TABLE `clients` (
 --
 
 INSERT INTO `clients` (`ID`, `name`, `user_id`) VALUES
-(1, 'Januszex Firma spierdolona', 8),
-(2, 'NBP - Narodowy Biznes Pojebańców', 8),
+(1, 'Januszex Firma', 8),
+(2, 'NBP', 8),
 (3, 'KAKA', 8),
-(4, 'TEST', 8);
+(4, 'TEST', 8),
+(5, 'test123', 8);
 
 -- --------------------------------------------------------
 
@@ -61,7 +62,8 @@ CREATE TABLE `groups` (
 INSERT INTO `groups` (`ID`, `name`) VALUES
 (1, 'Grupa TESSSSS'),
 (2, 'Brains'),
-(3, 'TEST WSPólny');
+(3, 'TEST WSPólny'),
+(4, 'TEST1');
 
 -- --------------------------------------------------------
 
@@ -82,7 +84,8 @@ INSERT INTO `members` (`user_id`, `group_id`) VALUES
 (8, 1),
 (7, 2),
 (8, 3),
-(7, 3);
+(7, 3),
+(8, 4);
 
 -- --------------------------------------------------------
 
@@ -104,9 +107,10 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`ID`, `user_id`, `group_id`, `client_id`, `name`) VALUES
 (1, 8, NULL, 1, 'Projekt Testowy 1'),
-(2, 8, 1, 2, 'Dla debili'),
+(2, 8, 1, 2, 'Dla '),
 (12, 8, NULL, 4, 'TEST'),
-(891, 8, NULL, 4, 'TEST2');
+(891, 8, NULL, 4, 'TEST2'),
+(892, 8, NULL, 5, 'Projekt');
 
 -- --------------------------------------------------------
 
@@ -130,10 +134,10 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`ID`, `project_id`, `name`, `description`, `start`, `stop`, `status`, `timer`) VALUES
-(1, 1, 'Task1', '0', '2022-01-21 21:46:22', '2022-01-21 21:46:14', 0, '00:00:00'),
-(2, 1, 'Task1', 'Brak', '2022-01-21 12:28:36', '2022-01-21 13:28:01', 0, '00:00:00'),
-(4, 1, 'TEST3', '', '2022-01-22 10:41:20', '2022-01-22 10:41:20', 0, '00:00:00'),
-(5, 1, 'aaa', '', '2022-01-22 11:29:35', '2022-01-22 11:29:35', 0, '00:00:00'),
+(1, 1, 'Task1', 'abcd', '2022-01-29 18:43:36', '2022-01-29 18:43:38', 0, '00:03:19'),
+(2, 1, 'Task1', 'Brak', '2022-01-29 18:45:03', '2022-01-29 18:45:05', 0, '00:04:01'),
+(4, 1, 'TEST3', 'hola hola hola hola hola hola', '2022-01-29 18:43:24', '2022-01-29 18:43:28', 0, '00:03:29'),
+(5, 1, 'aaa', '', '2022-01-29 18:43:24', '2022-01-29 18:43:27', 0, '00:03:38'),
 (6, 2, 'abcd', '', '2022-01-22 11:30:29', '2022-01-22 11:30:29', 0, '00:00:00'),
 (7, 12, 'test4', '', '2022-01-22 11:30:44', '2022-01-22 11:30:44', 0, '00:00:00');
 
@@ -160,10 +164,10 @@ INSERT INTO `users` (`ID`, `email`, `password`, `name`, `surname`, `role`) VALUE
 (1, 'test@op.pl', 'test', 'name', 'surname', 'a'),
 (2, 'abcd@xyz.pl', 'abcd', 'abcd', 'xyz', 'a'),
 (3, 'kkk@kk.pl', 'k', 'kk', 'kkk', 'u'),
-(5, 'jebal@male.dzieci', '$2y$04$UVd34QPT3Uq.dRqdcw7MRO5', 'Jan', 'Paweł II', 'u'),
 (6, 'test2@op.pl', '$2y$04$SBWbgERXhKmTiT05k3/FQOA', 'test2', 'test2', 'u'),
 (7, 'test3@op.pl', '$2y$04$XM5bUZFY6lvVw9ZvOP0JHu3', 'test3', 'test3', 'u'),
-(8, 'test4@op.pl', '$2y$04$bSMCEUEuPapdRkSQxbk08.tL18Mr5R453eRTWJQvtqTUUuOSRYBM6', 'test4', 'test', 'u');
+(8, 'test4@op.pl', '$2y$04$bSMCEUEuPapdRkSQxbk08.tL18Mr5R453eRTWJQvtqTUUuOSRYBM6', 'test4', 'test', 'u'),
+(9, 'master@ad.pl', '$2y$04$cFjh12R84WXvqbiebvOlhO3/qYGnMLrYOTqbWAz/ehGRdMmJrnv/6', 'Admin', 'Master', 'a');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -207,19 +211,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT dla tabeli `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=892;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=893;
 
 --
 -- AUTO_INCREMENT dla tabeli `tasks`
@@ -231,7 +235,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
