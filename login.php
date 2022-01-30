@@ -30,7 +30,12 @@ if (isset($_POST['submit'])) {
                     unset($getRow['password']);
                     $_SESSION = $getRow;
                     //echo print_r($_SESSION);
-                    header('location:main.php');
+                    if($getRow['role']=='u'){
+                        header('location:main.php');
+                    }
+                    else{
+                        header('location:dashboard.php');
+                    }
                     exit();
                 } else $errors[] = "Wrong Email or Password";
             } else $errors[] = "Wrong Email or Password";
