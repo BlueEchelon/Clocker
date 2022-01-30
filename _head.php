@@ -9,5 +9,6 @@
     rel="stylesheet">
   <link rel="stylesheet" href="./styles/styles.css?v=<?php echo time() ?>">
   <script src='./app.js?v=<?php echo time() ?>">' defer></script>
+  <script src='./timer.js?v=<?php echo time() ?>">' defer></script>
   <title>Clocker</title>
 </head>
